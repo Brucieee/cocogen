@@ -22,8 +22,11 @@
         "vite": "^6.0.11"
     },
     "dependencies": {
+<<<<<<< HEAD
         "@fontsource/inter": "^5.1.1",
         "@fontsource/jost": "^5.1.2",
+=======
+>>>>>>> 6bf72b4550791e4822359e707343d1edaafc8ef4
         "react-hot-toast": "^2.5.1"
     }
 }
