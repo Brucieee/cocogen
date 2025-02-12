@@ -13,13 +13,14 @@ export default function Button({ text, size, variant, isActive, onClick, onRight
     const baseStyles = `custom-button inline-flex items-center justify-center border-[3px] border-solid rounded-[3px] leading-[28px] relative group transition-all duration-300`;
 
     const defaultStyles = `text-white`;
-    const disabledStyles = `text-gray-500 cursor-not-allowed`;
+    const disabledStyles = `text-white cursor-not-allowed`;
 
     return (
         <button
             className={`${baseStyles} ${variant === "disabled" ? disabledStyles : defaultStyles}`}
             style={{
-                width: isActive && variant !== "disabled" ? expandedWidth : width, 
+                color: "white",  // Force white text for disabled buttons
+                width: isActive && variant !== "disabled" ? expandedWidth : width,
                 height: height,
                 fontSize: textSize,
                 backgroundColor: variant === "disabled" ? "#C0E6E6" : isActive ? "#60B3B3" : "#008080",
@@ -28,6 +29,7 @@ export default function Button({ text, size, variant, isActive, onClick, onRight
                 paddingRight: isActive && variant !== "disabled" ? "10px" : "12px",
                 transition: "all 0.3s ease-in-out",
             }}
+            
             onMouseDown={!disabled ? onClick : undefined}
             onContextMenu={!disabled ? onRightClick : undefined}
             disabled={disabled}

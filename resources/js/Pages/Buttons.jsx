@@ -2,20 +2,21 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import React, { useState, useEffect } from "react";
 import Button from "../Components/Button"; 
-
+import DropdownButton from "@/Components/DropdownButton";
 
 export default function Buttons() {
     const [activeButton, setActiveButton] = useState(null);
+    const [enableDisabledButtons, setEnableDisabledButtons] = useState(false);
 
-    const handleButtonClick = (event, buttonId) => {
+    const handleButtonClick = (event, buttonId, type) => {
         event.stopPropagation();
-        setActiveButton(buttonId);
+        setActiveButton(`${type}-${buttonId}`);
     };
 
-    const handleRightClick = (event, buttonId) => {
+    const handleRightClick = (event, buttonId, type) => {
         event.preventDefault();
         event.stopPropagation();
-        setActiveButton(buttonId);
+        setActiveButton(`${type}-${buttonId}`);
     };
 
     useEffect(() => {
@@ -34,6 +35,19 @@ export default function Buttons() {
 
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                    {/* Checkbox to Enable Disabled Buttons */}
+                    <div className="mb-4">
+                        <label className="flex items-center space-x-2">
+                            <input
+                                type="checkbox"
+                                checked={enableDisabledButtons}
+                                onChange={() => setEnableDisabledButtons(!enableDisabledButtons)}
+                                className="w-4 h-4"
+                            />
+                            <span>Enable Disabled Buttons</span>
+                        </label>
+                    </div>
+
                     <div className="grid grid-cols-2 gap-4 mt-6 text-left">
                         {["Default", "Disabled"].map((title, index) => (
                             <div key={index} className="relative">
@@ -52,18 +66,40 @@ export default function Buttons() {
                                     text="Button"
                                     size={size}
                                     variant="primary"
-                                    isActive={activeButton === size}
-                                    onClick={(event) => handleButtonClick(event, size)}
-                                    onRightClick={(event) => handleRightClick(event, size)}
+                                    isActive={activeButton === `default-${size}`}
+                                    onClick={(event) => handleButtonClick(event, size, "default")}
+                                    onRightClick={(event) => handleRightClick(event, size, "default")}
+                                    disabled={false} // Always enabled
                                 />
                             ))}
+
+                            {/* Regular Dropdown Buttons */}
+                            <DropdownButton text="Button" size="huge" variant="primary" options={["Option 1", "Option 2"]} />
+                            <DropdownButton text="Button" size="medium" variant="primary" options={["Option A", "Option B"]} />
+                            <DropdownButton text="Button" size="small" variant="primary" options={["Item 1", "Item 2"]} />
+                            <DropdownButton text="Button" size="tiny" variant="primary" options={["Choice X", "Choice Y", "Choice Z"]} />
                         </div>
 
                         <div className="flex flex-col items-left gap-4">
                             {/* Disabled Buttons */}
                             {["huge", "medium", "small", "tiny"].map((size, index) => (
-                                <Button key={index} text="Button" size={size} variant="disabled" disabled />
+                                <Button
+                                    key={index}
+                                    text="Button"
+                                    size={size}
+                                    variant={enableDisabledButtons ? "primary" : "disabled"}
+                                    isActive={activeButton === `disabled-${size}`}
+                                    onClick={(event) => handleButtonClick(event, size, "disabled")}
+                                    onRightClick={(event) => handleRightClick(event, size, "disabled")}
+                                    disabled={!enableDisabledButtons}
+                                />
                             ))}
+
+                            {/* Disabled Dropdown Buttons */}
+                            <DropdownButton text="Button" size="huge" variant={enableDisabledButtons ? "primary" : "disabled"} options={enableDisabledButtons ? ["Option 1", "Option 2"] : []} />
+                            <DropdownButton text="Button" size="medium" variant={enableDisabledButtons ? "primary" : "disabled"} options={enableDisabledButtons ? ["Option A", "Option B"] : []} />
+                            <DropdownButton text="Button" size="small" variant={enableDisabledButtons ? "primary" : "disabled"} options={enableDisabledButtons ? ["Item 1", "Item 2"] : []} />
+                            <DropdownButton text="Button" size="tiny" variant={enableDisabledButtons ? "primary" : "disabled"} options={enableDisabledButtons ? ["Choice X", "Choice Y", "Choice Z"] : []} />
                         </div>
                     </div>
                 </div>
