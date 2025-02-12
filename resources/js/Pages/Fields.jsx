@@ -3,6 +3,7 @@ import { Head } from '@inertiajs/react';
 import InputField from '../Components/InputField';
 import InputFieldIcon from '../Components/InputFieldWithIcon';
 import InputFieldInfo from '../Components/InputFieldWithInfo';
+import InputFieldDisabled from '@/Components/InputDisabled';
 
 
 export default function Fields() {
@@ -24,9 +25,14 @@ export default function Fields() {
                 <InputFieldIcon label="Field with Icon" required={true} placeholder="Field Label" hasIcon={true} />
             </div>
 
-            <Head title='Field with Icon'/>
+            <Head title='Field with Info Icon'/>
            <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg p-6 m-5">
-                <InputFieldInfo label="Field with Icon" required={true} placeholder="Field Label" hasIcon={true} />
+                <InputFieldInfo label="Field with Info Icon" required={true} placeholder="Field Label" hasIcon={true} />
+            </div>
+
+            <Head title='Field Disabled'/>
+           <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg p-6 m-5">
+                <InputFieldDisabled label="Field Disabled" required={true} placeholder="Field Label" hasIcon={true} />
             </div>
 
 
