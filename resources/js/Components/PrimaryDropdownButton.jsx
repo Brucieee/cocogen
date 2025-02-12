@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
-export default function PrimaryDropdownButton({ 
-    children, 
-    size = "medium", 
-    disabled = false, 
-    options = [], 
+export default function PrimaryDropdownButton({
+    children,
+    size = "medium",
+    disabled = false,
+    options = [],
     isOpen, // 👈 Accept `isOpen` from parent
     onClick, // 👈 Accept `onClick` from parent
 }) {
@@ -16,6 +16,24 @@ export default function PrimaryDropdownButton({
     };
 
     const { width, height, textSize, iconSize } = sizes[size];
+    const [isActive, setIsActive] = useState(isOpen); // Track active state for styling
+    const dropdownRef = useRef(null);
+
+    // Sync `isActive` with `isOpen`
+    useEffect(() => {
+        setIsActive(isOpen);
+    }, [isOpen]);
+
+    // Handle clicks outside the dropdown
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                onClick(); // Notify parent to close the dropdown
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, [onClick]);
 
     const defaultOptions = [
         { label: "Option 1", onClick: () => console.log("Option 1 clicked") },
@@ -26,11 +44,15 @@ export default function PrimaryDropdownButton({
     const dropdownOptions = options.length ? options : defaultOptions;
 
     return (
-        <div className="relative inline-block dropdown-container">
+        <div className="relative inline-block dropdown-container" ref={dropdownRef}>
             {/* Dropdown Button */}
             <button
                 className={`inline-flex items-center justify-between rounded-[3px] px-3 transition-all duration-300 ${
-                    disabled ? "cursor-not-allowed bg-[#C0E6E6]" : "bg-teal-700 hover:bg-[#60B3B3]"
+                    disabled
+                        ? "cursor-not-allowed bg-[#C0E6E6]"
+                        : isActive
+                        ? "bg-[#60B3B3]" // Active state
+                        : "bg-teal-700 hover:bg-[#60B3B3]" // Default and hover state
                 }`}
                 style={{
                     color: "white",
@@ -41,10 +63,11 @@ export default function PrimaryDropdownButton({
                     boxShadow: "none",
                 }}
                 onClick={onClick} // 👈 Use the parent state management
+                disabled={disabled}
             >
                 {children}
                 <img
-                    src={`/icons/Icon-ArrowDown.svg`} 
+                    src={`/icons/Icon-ArrowDown.svg`}
                     alt="Dropdown Arrow"
                     className={`ml-2 transition-transform duration-300 ${isOpen ? "rotate-180" : "rotate-0"}`}
                     style={{
@@ -70,6 +93,7 @@ export default function PrimaryDropdownButton({
                         className="w-full px-3 py-2 text-left text-gray-800 hover:bg-gray-200 transition"
                         onClick={() => {
                             option.onClick();
+                            onClick(); // Close dropdown after selection
                         }}
                     >
                         {option.label}

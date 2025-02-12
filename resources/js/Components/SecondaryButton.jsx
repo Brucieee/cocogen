@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 export default function SecondaryButton({ text, size, isActive, onClick, onRightClick, disabled }) {
     const sizes = {
@@ -9,61 +9,69 @@ export default function SecondaryButton({ text, size, isActive, onClick, onRight
     };
 
     const { width, height, textSize, expandedWidth, iconSize } = sizes[size];
-    const [isExpanded, setIsExpanded] = useState(isActive);
-    const [isClicked, setIsClicked] = useState(false);
+    const [isExpanded, setIsExpanded] = useState(false);
+    const buttonRef = useRef(null);
 
+    // Sync isExpanded with isActive
     useEffect(() => {
         setIsExpanded(isActive);
-        if (!isActive) {
-            setIsClicked(false);
-        }
     }, [isActive]);
 
+    // Handle clicks outside the button
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (!event.target.closest(".secondary-button")) {
+            if (buttonRef.current && !buttonRef.current.contains(event.target)) {
                 setIsExpanded(false);
-                setIsClicked(false);
             }
         };
-        window.addEventListener("click", handleClickOutside);
-        return () => window.removeEventListener("click", handleClickOutside);
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
+
+    // Handle button click
+    const handleClick = (event) => {
+        if (!disabled) {
+            event.stopPropagation();
+            setIsExpanded(true);
+            onClick && onClick(event);
+        }
+    };
+
+    // Handle right-click
+    const handleRightClick = (event) => {
+        if (!disabled) {
+            event.preventDefault();
+            event.stopPropagation();
+            setIsExpanded(true);
+            onRightClick && onRightClick(event);
+        }
+    };
 
     return (
         <button
-            className="secondary-button inline-flex items-center justify-center rounded-[3px] leading-[28px] relative group transition-all duration-300"
+            ref={buttonRef}
+            className={`secondary-button inline-flex items-center justify-center rounded-[3px] leading-[28px] relative group transition-all duration-300
+                ${disabled ? "cursor-not-allowed text-[#A8D9D9] bg-[#C0E6E6]" : ""}
+            `}
             style={{
-                color: disabled ? "#A8D9D9" : "#008080",
-                backgroundColor: isClicked ? "#C0E6E6" : "white",
-                width: isExpanded && !disabled ? expandedWidth : width,
+                width: isExpanded ? expandedWidth : width,
                 height: height,
                 fontSize: textSize,
-                border: "none", //Removes any border
-                borderColor: "transparent", //Ensures no visible border color
-                paddingLeft: isExpanded && !disabled ? "25px" : "12px",
-                paddingRight: isExpanded && !disabled ? "10px" : "12px",
+                paddingLeft: isExpanded ? "25px" : "12px",
+                paddingRight: isExpanded ? "10px" : "12px",
                 transition: "all 0.3s ease-in-out",
-                outline: "none", //Removes default focus outline
-                boxShadow: "none", //Removes any shadow that may look like an outline
+                outline: "none",
+                border: "none",
+                boxShadow: "none",
+                backgroundColor: disabled
+                    ? "#C0E6E6" // Disabled state
+                    : isActive
+                    ? "#60B3B3" // Active (clicked) state
+                    : "white", // Default state
+                color: disabled ? "#A8D9D9" : "#008080",
             }}
-            onClick={(event) => {
-                if (!disabled) {
-                    event.stopPropagation();
-                    setIsExpanded(true);
-                    setIsClicked(true);
-                    onClick && onClick(event);
-                }
-            }}
-            onContextMenu={(event) => {
-                if (!disabled) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    setIsExpanded(true);
-                    setIsClicked(true);
-                    onRightClick && onRightClick(event);
-                }
-            }}
+            onClick={handleClick}
+            onContextMenu={handleRightClick}
             onMouseEnter={() => {
                 if (!disabled) {
                     setIsExpanded(true);
@@ -74,28 +82,12 @@ export default function SecondaryButton({ text, size, isActive, onClick, onRight
                     setIsExpanded(false);
                 }
             }}
-            onFocus={(e) => {
-                if (!disabled) {
-                    e.currentTarget.style.outline = "none";
-                    e.currentTarget.style.border = "none";
-                    e.currentTarget.style.boxShadow = "none";
-                }
-            }}
-            onBlur={(e) => {
-                if (!disabled) {
-                    e.currentTarget.style.outline = "none";
-                    e.currentTarget.style.border = "none";
-                    e.currentTarget.style.boxShadow = "none";
-                }
-            }}
         >
             {!disabled && (
                 <img
                     src="/icons/Icon-ArrowRight.svg"
                     alt="Arrow"
-                    className={`absolute left-3 transition-opacity duration-300 ${
-                        isExpanded ? "opacity-100" : "opacity-0"
-                    }`}
+                    className={`absolute left-3 transition-opacity duration-300 ${isExpanded ? "opacity-100" : "opacity-0"}`}
                     style={{
                         width: iconSize,
                         height: iconSize,
