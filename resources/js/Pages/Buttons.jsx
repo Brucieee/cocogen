@@ -3,6 +3,7 @@ import { Head } from "@inertiajs/react";
 import React, { useState, useEffect } from "react";
 import PrimaryButton from "../Components/PrimaryButton";
 import SecondaryButton from "../Components/SecondaryButton";
+import PrimaryDropdownButton from "@/Components/PrimaryDropdownButton";
 
 export default function Buttons() {
     const [activeButton, setActiveButton] = useState(null);
@@ -50,14 +51,9 @@ export default function Buttons() {
                     <h3 className="text-[25px] font-jost font-medium text-black">Primary Button</h3>
                     <div className="mt-2 w-full h-[3px] bg-black"></div>
 
-                    <div className="grid grid-cols-2 gap-4 mt-6 text-center">
+                    <div className="grid grid-cols-2 gap-4 mt-6 text-left">
                         <div className="flex flex-col items-left gap-4">
-                            {[
-                                "huge",
-                                "medium",
-                                "small",
-                                "tiny"
-                            ].map((size, index) => (
+                            {["huge", "medium", "small", "tiny"].map((size, index) => (
                                 <PrimaryButton
                                     key={index}
                                     text="Button"
@@ -70,12 +66,7 @@ export default function Buttons() {
                             ))}
                         </div>
                         <div className="flex flex-col items-left gap-4">
-                            {[
-                                "huge",
-                                "medium",
-                                "small",
-                                "tiny"
-                            ].map((size, index) => (
+                            {["huge", "medium", "small", "tiny"].map((size, index) => (
                                 <PrimaryButton
                                     key={index}
                                     text="Button"
@@ -89,17 +80,30 @@ export default function Buttons() {
                         </div>
                     </div>
 
+                    {/* Dropdown Primary Buttons */}
+                    <h3 className="text-[25px] font-jost font-medium text-black mt-10">Primary Dropdown Button</h3>
+                    <div className="mt-2 w-full h-[3px] bg-black"></div>
+
+                    <div className="grid grid-cols-1 gap-4 mt-6 text-left">
+                        {["huge", "medium", "small", "tiny"].map((size, index) => (
+                            <PrimaryDropdownButton
+                                key={index}
+                                text="Button"
+                                size={size}
+                                isActive={activeButton === `dropdown-${size}`}
+                                onClick={(event) => handleButtonClick(event, size, "dropdown")}
+                                disabled={false}
+                            />
+                        ))}
+                    </div>
+
+                    {/* Keeping Secondary Buttons Unchanged */}
                     <h3 className="text-[25px] font-jost font-medium text-black mt-10">Secondary Button</h3>
                     <div className="mt-2 w-full h-[3px] bg-black"></div>
 
                     <div className="grid grid-cols-2 gap-4 mt-6 text-center">
                         <div className="flex flex-col items-left gap-4">
-                            {[
-                                "huge",
-                                "medium",
-                                "small",
-                                "tiny"
-                            ].map((size, index) => (
+                            {["huge", "medium", "small", "tiny"].map((size, index) => (
                                 <SecondaryButton
                                     key={index}
                                     text="Button"
@@ -112,12 +116,7 @@ export default function Buttons() {
                             ))}
                         </div>
                         <div className="flex flex-col items-left gap-4">
-                            {[
-                                "huge",
-                                "medium",
-                                "small",
-                                "tiny"
-                            ].map((size, index) => (
+                            {["huge", "medium", "small", "tiny"].map((size, index) => (
                                 <SecondaryButton
                                     key={index}
                                     text="Button"

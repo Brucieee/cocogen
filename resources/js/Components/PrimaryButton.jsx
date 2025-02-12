@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 
 export default function PrimaryButton({ text, size, isActive, onClick, onRightClick, disabled }) {
     const sizes = {
-        huge: { width: "114px", height: "48px", textSize: "23px", expandedWidth: "160px", iconSize: "20px" },
-        medium: { width: "91px", height: "44px", textSize: "16px", expandedWidth: "131px", iconSize: "16px" },
-        small: { width: "79px", height: "40px", textSize: "12px", expandedWidth: "105px", iconSize: "14px" },
-        tiny: { width: "72px", height: "32px", textSize: "10px", expandedWidth: "85px", iconSize: "12px" },
+        huge: { width: "114px", height: "48px", textSize: "23px", expandedWidth: "160px" },
+        medium: { width: "91px", height: "44px", textSize: "16px", expandedWidth: "131px" },
+        small: { width: "79px", height: "40px", textSize: "12px", expandedWidth: "105px" },
+        tiny: { width: "72px", height: "32px", textSize: "10px", expandedWidth: "85px" },
     };
 
-    const { width, height, textSize, expandedWidth, iconSize } = sizes[size];
+    const { width, height, textSize, expandedWidth } = sizes[size];
     const [isExpanded, setIsExpanded] = useState(isActive);
     const [isClicked, setIsClicked] = useState(false);
 
@@ -83,11 +83,7 @@ export default function PrimaryButton({ text, size, isActive, onClick, onRightCl
                     className={`absolute left-3 transition-opacity duration-300 ${
                         isExpanded ? "opacity-100" : "opacity-0"
                     }`}
-                    style={{
-                        width: iconSize,
-                        height: iconSize,
-                        filter: "brightness(0) invert(1)", // Keeps it white
-                    }}
+                    style={{ width: "16px", height: "16px" }}
                 />
             )}
             {text}
