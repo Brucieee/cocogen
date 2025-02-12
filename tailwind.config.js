@@ -22,6 +22,8 @@ export default {
                 backgroundhover: '#F0FFFF', // primarytext color
                 borderhover: '#1E1F21',
                 labelhover: '#848A90',
+                incorrectbg: '#FFF7F7', // incorrect color
+                inccorectbghover: '#FFE2E2',
             }
         },
     },
