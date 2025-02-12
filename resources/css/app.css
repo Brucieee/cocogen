@@ -1,7 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-<<<<<<< HEAD
 @font-face {
     font-family: 'Jost';
     font-style: normal;
@@ -16,5 +15,3 @@
     src: url('/fonts/inter.ttf') format('truetype'),
 }
   
-=======
->>>>>>> 6bf72b4550791e4822359e707343d1edaafc8ef4
