@@ -16,8 +16,17 @@ export default {
                 jost: ['Jost', 'sans-serif'],
                 inter: ['Inter', 'sans-serif'],
             },
+            colors: {
+                primary: '#006666', // Teal
+                secondary: '#848A90', // gray
+                backgroundhover: '#F0FFFF', // primarytext color
+                borderhover: '#1E1F21',
+                labelhover: '#848A90',
+            }
         },
     },
 
     plugins: [forms, require('daisyui')],
 };
+
+
