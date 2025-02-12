@@ -28,7 +28,7 @@ export default function InputFieldIcon({ label, required, placeholder }) {
                     placeholder={placeholder}
                     value={inputValue}
                     onChange={handleInputChange}
-                    className="h-[44px] w-[214px] border-0 border-b-2 bg-transparent flex items-center pb-[10px] gap-2.5 p-[10px] text-[14px] font-normal transition-all duration-300 focus:ring-0 focus:outline-none border-secondary text-gray-500 group-hover:bg-backgroundhover group-hover:border-borderhover group-hover:placeholder-black"
+                    className="h-[44px] w-[214px] border-0 border-b-2 bg-transparent flex items-center pb-[10px] gap-2.5 p-[10px] text-[14px] font-normal transition-all duration-300 focus:ring-0 focus:outline-none border-secondary text-gray-500 group-hover:bg-backgroundhover group-hover:border-primary group-hover:placeholder-black"
                 />
             </div>
         </div>

@@ -29,6 +29,8 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/home-create', [HomeController::class, 'createTodo'])->name('home.create');
 Route::get('/buttons', [HomeController::class, 'buttons'])->name('buttons');
 Route::get('/fields', [HomeController::class, 'fields'])->name('fields');
+Route::get('/modals', [HomeController::class, 'modals'])->name('modals');
+
 
 
 

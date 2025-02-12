@@ -51,6 +51,12 @@ export default function AuthenticatedLayout({ header, children }) {
                                 >
                                     Fields
                                 </NavLink>
+                                <NavLink
+                                    href={route('modals')}
+                                    active={route().current('modals')}
+                                >
+                                    Modals
+                                </NavLink>
                             </div>
 
                         </div>

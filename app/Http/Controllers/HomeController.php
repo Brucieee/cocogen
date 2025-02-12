@@ -31,4 +31,10 @@ class HomeController extends Controller
 
         return Inertia::render('Fields');
     }
+
+    public function Modals(){
+
+
+        return Inertia::render('Modals');
+    }
 }
