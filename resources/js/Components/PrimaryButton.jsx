@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 
-export default function PrimaryButton({ text, size, isActive, onClick, onRightClick, disabled }) {
+export default function PrimaryButton({ children, size = "medium", isActive, onClick, onRightClick, disabled }) {
     const sizes = {
-        huge: { width: "114px", height: "48px", textSize: "23px", expandedWidth: "160px" },
-        medium: { width: "91px", height: "44px", textSize: "16px", expandedWidth: "131px" },
-        small: { width: "79px", height: "40px", textSize: "12px", expandedWidth: "105px" },
-        tiny: { width: "72px", height: "32px", textSize: "10px", expandedWidth: "85px" },
+        huge: { width: "114px", height: "48px", textSize: "23px", expandedWidth: "160px", iconSize: "20px" },
+        medium: { width: "91px", height: "44px", textSize: "16px", expandedWidth: "131px", iconSize: "16px"},
+        small: { width: "79px", height: "40px", textSize: "12px", expandedWidth: "105px", iconSize: "14px" },
+        tiny: { width: "72px", height: "32px", textSize: "10px", expandedWidth: "85px", iconSize: "12px" },
     };
 
-    const { width, height, textSize, expandedWidth } = sizes[size];
+    const { width, height, textSize, expandedWidth, iconSize } = sizes[size];
     const [isExpanded, setIsExpanded] = useState(isActive);
     const [isClicked, setIsClicked] = useState(false);
 
@@ -36,7 +36,7 @@ export default function PrimaryButton({ text, size, isActive, onClick, onRightCl
         <button
             className={`${baseStyles} ${disabled ? "cursor-not-allowed" : ""}`}
             style={{
-                color: "white",
+                color: "#FFFFFF",
                 width: isExpanded && !disabled ? expandedWidth : width,
                 height: height,
                 fontSize: textSize,
@@ -78,15 +78,19 @@ export default function PrimaryButton({ text, size, isActive, onClick, onRightCl
         >
             {!disabled && (
                 <img
-                    src="/icons/Icon-ArrowRight.svg"
-                    alt="Arrow"
-                    className={`absolute left-3 transition-opacity duration-300 ${
-                        isExpanded ? "opacity-100" : "opacity-0"
-                    }`}
-                    style={{ width: "16px", height: "16px" }}
-                />
+                src="/icons/Icon-ArrowRight.svg"
+                alt="Arrow"
+                className={`absolute left-3 transition-opacity duration-300 ${
+                    isExpanded ? "opacity-100" : "opacity-0"
+                }`}
+                style={{ 
+                    filter: "invert(100%) brightness(100%) grayscale(100%)",
+                    width: iconSize,
+                    height: iconSize,
+                }}
+            />
             )}
-            {text}
+            {children}
         </button>
     );
 }

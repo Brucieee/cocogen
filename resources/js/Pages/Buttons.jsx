@@ -7,12 +7,25 @@ import PrimaryDropdownButton from "@/Components/PrimaryDropdownButton";
 
 export default function Buttons() {
     const [activeButton, setActiveButton] = useState(null);
+    const [activeDropdown, setActiveDropdown] = useState(null);
     const [enableDisabledButtons, setEnableDisabledButtons] = useState(false);
+    const [selectedOptions, setSelectedOptions] = useState({});
 
-    const handleButtonClick = (event, buttonId, type) => {
+    const handleButtonClick = (event, buttonId, type, isDisabled = false) => {
         event.stopPropagation();
-        setActiveButton(`${type}-${buttonId}`);
+        
+        if (type === "dropdown") {
+            setActiveDropdown((prev) => (prev === `dropdown-${buttonId}` ? null : `dropdown-${buttonId}`));
+        } else {
+            setActiveDropdown(null); // Close any open dropdown when clicking a normal button
+            if (!isDisabled) {
+                setActiveButton(`${type}-${buttonId}-enabled`);
+            } else {
+                setActiveButton(`${type}-${buttonId}-disabled`);
+            }
+        }
     };
+    
 
     const handleRightClick = (event, buttonId, type) => {
         event.preventDefault();
@@ -20,10 +33,16 @@ export default function Buttons() {
         setActiveButton(`${type}-${buttonId}`);
     };
 
+    const handleDropdownItemClick = (size, label) => {
+        setSelectedOptions((prev) => ({ ...prev, [size]: label })); // Update the selected label
+        setActiveDropdown(null); // Close dropdown after selection
+    };
+
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (!event.target.closest(".custom-button")) {
                 setActiveButton(null);
+                setActiveDropdown(null); // Close dropdowns when clicking outside
             }
         };
         window.addEventListener("click", handleClickOutside);
@@ -55,27 +74,30 @@ export default function Buttons() {
                         <div className="flex flex-col items-left gap-4">
                             {["huge", "medium", "small", "tiny"].map((size, index) => (
                                 <PrimaryButton
-                                    key={index}
-                                    text="Button"
-                                    size={size}
-                                    isActive={activeButton === `default-${size}`}
-                                    onClick={(event) => handleButtonClick(event, size, "default")}
-                                    onRightClick={(event) => handleRightClick(event, size, "default")}
-                                    disabled={false}
-                                />
+                                key={index}
+                                size={size}
+                                isActive={activeButton === `default-${size}-enabled`}
+                                onClick={(event) => handleButtonClick(event, size, "default", false)}
+                                onRightClick={(event) => handleRightClick(event, size, "default")}
+                                disabled={false}
+                            >
+                                Button
+                            </PrimaryButton>
+                            
                             ))}
                         </div>
                         <div className="flex flex-col items-left gap-4">
                             {["huge", "medium", "small", "tiny"].map((size, index) => (
                                 <PrimaryButton
-                                    key={index}
-                                    text="Button"
-                                    size={size}
-                                    isActive={activeButton === `disabled-${size}`}
-                                    onClick={(event) => handleButtonClick(event, size, "disabled")}
-                                    onRightClick={(event) => handleRightClick(event, size, "disabled")}
-                                    disabled={!enableDisabledButtons}
-                                />
+                                key={index}
+                                size={size}
+                                isActive={activeButton === `default-${size}-disabled`}
+                                onClick={(event) => handleButtonClick(event, size, "default", true)}
+                                onRightClick={(event) => handleRightClick(event, size, "default")}
+                                disabled={!enableDisabledButtons}
+                            >
+                                Button
+                            </PrimaryButton>
                             ))}
                         </div>
                     </div>
@@ -85,16 +107,26 @@ export default function Buttons() {
                     <div className="mt-2 w-full h-[3px] bg-black"></div>
 
                     <div className="grid grid-cols-1 gap-4 mt-6 text-left">
-                        {["huge", "medium", "small", "tiny"].map((size, index) => (
-                            <PrimaryDropdownButton
-                                key={index}
-                                text="Button"
-                                size={size}
-                                isActive={activeButton === `dropdown-${size}`}
-                                onClick={(event) => handleButtonClick(event, size, "dropdown")}
-                                disabled={false}
-                            />
-                        ))}
+                   {["huge", "medium", "small", "tiny"].map((size, index) => (
+                        <PrimaryDropdownButton
+                            key={index}
+                            size={size}
+                            isOpen={activeDropdown === `dropdown-${size}`}
+                            onClick={(event) => handleButtonClick(event, size, "dropdown")}
+                            options={[
+                                { label: "Option 1", onClick: () => handleDropdownItemClick(size, "Option 1") },
+                                { label: "Option 2", onClick: () => handleDropdownItemClick(size, "Option 2") },
+                                { label: "Option 3", onClick: () => handleDropdownItemClick(size, "Option 3") },
+                            ]}
+                            disabled={false}
+                        >
+                            {selectedOptions[size] || "Button"} {/* Update the button label */}
+                        </PrimaryDropdownButton>
+                    
+                    
+                    
+                    ))}
+
                     </div>
 
                     {/* Keeping Secondary Buttons Unchanged */}

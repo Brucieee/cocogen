@@ -1,6 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-export default function PrimaryDropdownButton({ text, size, disabled, options = [] }) {
+export default function PrimaryDropdownButton({ 
+    children, 
+    size = "medium", 
+    disabled = false, 
+    options = [], 
+    isOpen, // 👈 Accept `isOpen` from parent
+    onClick, // 👈 Accept `onClick` from parent
+}) {
     const sizes = {
         huge: { width: "144px", height: "48px", textSize: "23px", iconSize: "20px" },
         medium: { width: "116px", height: "44px", textSize: "16px", iconSize: "16px" },
@@ -9,10 +16,17 @@ export default function PrimaryDropdownButton({ text, size, disabled, options = 
     };
 
     const { width, height, textSize, iconSize } = sizes[size];
-    const [isOpen, setIsOpen] = useState(false);
+
+    const defaultOptions = [
+        { label: "Option 1", onClick: () => console.log("Option 1 clicked") },
+        { label: "Option 2", onClick: () => console.log("Option 2 clicked") },
+        { label: "Option 3", onClick: () => console.log("Option 3 clicked") },
+    ];
+
+    const dropdownOptions = options.length ? options : defaultOptions;
 
     return (
-        <div className="relative inline-block">
+        <div className="relative inline-block dropdown-container">
             {/* Dropdown Button */}
             <button
                 className={`inline-flex items-center justify-between rounded-[3px] px-3 transition-all duration-300 ${
@@ -26,41 +40,35 @@ export default function PrimaryDropdownButton({ text, size, disabled, options = 
                     outline: "none",
                     boxShadow: "none",
                 }}
-                onClick={(event) => {
-                    if (!disabled) {
-                        event.stopPropagation();
-                        setIsOpen(!isOpen);
-                    }
-                }}
+                onClick={onClick} // 👈 Use the parent state management
             >
-                {text}
+                {children}
                 <img
-                    src={`/icons/${isOpen ? "Icon-ArrowUp.svg" : "Icon-ArrowDown.svg"}`}
+                    src={`/icons/Icon-ArrowDown.svg`} 
                     alt="Dropdown Arrow"
                     className={`ml-2 transition-transform duration-300 ${isOpen ? "rotate-180" : "rotate-0"}`}
                     style={{
                         width: iconSize,
                         height: iconSize,
-                        filter: "invert(100%)", // Makes the icon white
                     }}
                 />
             </button>
 
             {/* Dropdown Content */}
             <div
-                className={`absolute left-0 mt-2 w-full bg-white rounded shadow-lg transition-all duration-300 overflow-hidden ${
+                className={`absolute left-0 mt-2 min-w-[50%] bg-white rounded shadow-lg transition-all duration-300 overflow-hidden z-50 ${
                     isOpen ? "opacity-100 scale-100 max-h-60" : "opacity-0 scale-95 max-h-0 pointer-events-none"
                 }`}
                 style={{
-                    transformOrigin: "top", // Ensures the dropdown scales from the top
+                    transformOrigin: "top",
+                    zIndex: 50,
                 }}
             >
-                {options.map((option, index) => (
+                {dropdownOptions.map((option, index) => (
                     <button
                         key={index}
                         className="w-full px-3 py-2 text-left text-gray-800 hover:bg-gray-200 transition"
                         onClick={() => {
-                            setIsOpen(false);
                             option.onClick();
                         }}
                     >
