@@ -51,7 +51,7 @@ export default function PrimaryDropdownButton({
                     disabled
                         ? "cursor-not-allowed bg-[#C0E6E6]"
                         : isActive
-                        ? "bg-[#60B3B3]" // Active state
+                        ? "bg-[#C0E6E6]" // Active state
                         : "bg-teal-700 hover:bg-[#60B3B3]" // Default and hover state
                 }`}
                 style={{
