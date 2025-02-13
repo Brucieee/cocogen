@@ -1,6 +1,6 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PrimaryButton from "../Components/PrimaryButton";
 import SecondaryButton from "../Components/SecondaryButton";
 import PrimaryDropdownButton from "@/Components/PrimaryDropdownButton";
@@ -11,55 +11,13 @@ import Pill from "@/Components/Pill";
 import UploadButton from "@/Components/UploadButton";
 
 export default function Buttons() {
-    const [activeButton, setActiveButton] = useState(null); // Tracks active button (primary/secondary)
-    const [activeDropdown, setActiveDropdown] = useState(null); // Tracks active dropdown
-    const [enableDisabledButtons, setEnableDisabledButtons] = useState(false); // Toggles disabled buttons
-    const [selectedOptions, setSelectedOptions] = useState({}); // Tracks selected dropdown options
+    const [activeButton, setActiveButton] = useState(null);
+    const [enableDisabledButtons, setEnableDisabledButtons] = useState(false);
 
-    // Handles button clicks (primary/secondary)
-    const handleButtonClick = (event, buttonId, type) => {
-        event.stopPropagation();
-
-        if (type === "dropdown") {
-            // Toggle dropdown state
-            setActiveDropdown((prev) => (prev === `dropdown-${buttonId}` ? null : `dropdown-${buttonId}`));
-            setActiveButton(null); // Ensure no button is active when dropdown is clicked
-        } else {
-            // Set active button and close any open dropdown
-            setActiveDropdown(null);
-            setActiveButton((prev) => (prev === `${type}-${buttonId}` ? null : `${type}-${buttonId}`));
-        }
+    const handleButtonClick = (event, size, type) => {
+        console.log(`${type} button clicked of size ${size}`);
+        setActiveButton((prev) => (prev === `${type}-${size}` ? null : `${type}-${size}`));
     };
-
-    // Handles right-click on buttons
-    const handleRightClick = (event, buttonId, type) => {
-        event.preventDefault();
-        event.stopPropagation();
-        setActiveButton(`${type}-${buttonId}`);
-    };
-
-    // Handles dropdown item selection
-    const handleDropdownItemClick = (size, label) => {
-        setSelectedOptions((prev) => ({ ...prev, [size]: label })); // Update selected option
-        setActiveDropdown(null); // Close dropdown
-    };
-
-    const handleFileUpload = (file) => {
-        console.log("Uploaded file:", file);
-        // Handle the uploaded file (e.g., upload to the server)
-    };
-
-    // Handles clicks outside buttons/dropdowns
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (!event.target.closest(".custom-button")) {
-                setActiveButton(null); // Reset active button
-                setActiveDropdown(null); // Close dropdown
-            }
-        };
-        window.addEventListener("click", handleClickOutside);
-        return () => window.removeEventListener("click", handleClickOutside);
-    }, []);
 
     return (
         <AuthenticatedLayout header={<h2 className="text-xl font-semibold leading-tight text-gray-800">Buttons</h2>}>
@@ -93,7 +51,6 @@ export default function Buttons() {
                                     size={size}
                                     isActive={activeButton === `primary-${size}`}
                                     onClick={(event) => handleButtonClick(event, size, "primary")}
-                                    onRightClick={(event) => handleRightClick(event, size, "primary")}
                                     disabled={false}
                                 >
                                     Button
@@ -108,8 +65,11 @@ export default function Buttons() {
                                     key={index}
                                     size={size}
                                     isActive={activeButton === `primary-disabled-${size}`}
-                                    onClick={(event) => handleButtonClick(event, size, "primary-disabled")}
-                                    onRightClick={(event) => handleRightClick(event, size, "primary-disabled")}
+                                    onClick={(event) => {
+                                        if (enableDisabledButtons) { // Only handle click if the button is enabled
+                                            handleButtonClick(event, size, "primary-disabled");
+                                        }
+                                    }}
                                     disabled={!enableDisabledButtons}
                                 >
                                     Button
@@ -118,28 +78,46 @@ export default function Buttons() {
                         </div>
                     </div>
 
-                    {/* Dropdown Primary Buttons */}
+                    {/* Primary Dropdown Buttons */}
                     <h3 className="text-[25px] font-jost font-medium text-black mt-10">Primary Dropdown Button</h3>
                     <div className="mt-2 w-full h-[3px] bg-black"></div>
 
-                    <div className="grid grid-cols-1 gap-4 mt-6 text-left">
-                        {["huge", "medium", "small", "tiny"].map((size, index) => (
-                            <PrimaryDropdownButton
-                                key={index}
-                                size={size}
-                                isOpen={activeDropdown === `dropdown-${size}`}
-                                onClick={(event) => handleButtonClick(event, size, "dropdown")}
-                                options={[
-                                    { label: "Option 1", onClick: () => handleDropdownItemClick(size, "Option 1") },
-                                    { label: "Option 2", onClick: () => handleDropdownItemClick(size, "Option 2") },
-                                    { label: "Option 3", onClick: () => handleDropdownItemClick(size, "Option 3") },
-                                ]}
-                                disabled={false}
-                            >
-                                {selectedOptions[size] || "Button"} {/* Update the button label */}
-                            </PrimaryDropdownButton>
-                        ))}
+                    <div className="mt-6 text-left">
+                        {/* Create a single grid with fixed columns for each size */}
+                        <div className="grid grid-cols-2 gap-6">
+                            {/* Loop through the sizes and render both enabled and disabled buttons in the same row */}
+                            {["huge", "medium", "small", "tiny"].map((size, index) => (
+                                <React.Fragment key={index}>
+                                    {/* Enabled Primary Dropdown Button */}
+                                    <div className="flex justify-center items-center">
+                                        <PrimaryDropdownButton
+                                            size={size}
+                                            options={[
+                                                { label: "Option 1" },
+                                                { label: "Option 2" },
+                                                { label: "Option 3" },
+                                            ]}
+                                        />
+                                    </div>
+
+                                    {/* Disabled Primary Dropdown Button */}
+                                    <div className="flex justify-center items-center">
+                                        <PrimaryDropdownButton
+                                            size={size}
+                                            options={[
+                                                { label: "Option 1" },
+                                                { label: "Option 2" },
+                                                { label: "Option 3" },
+                                            ]}
+                                            disabled={!enableDisabledButtons}
+                                        />
+                                    </div>
+                                </React.Fragment>
+                            ))}
+                        </div>
                     </div>
+
+
 
                     {/* Secondary Buttons */}
                     <h3 className="text-[25px] font-jost font-medium text-black mt-10">Secondary Button</h3>
@@ -154,7 +132,6 @@ export default function Buttons() {
                                     size={size}
                                     isActive={activeButton === `secondary-${size}`}
                                     onClick={(event) => handleButtonClick(event, size, "secondary")}
-                                    onRightClick={(event) => handleRightClick(event, size, "secondary")}
                                     disabled={false}
                                 >
                                     Button
@@ -170,7 +147,6 @@ export default function Buttons() {
                                     size={size}
                                     isActive={activeButton === `secondary-disabled-${size}`}
                                     onClick={(event) => handleButtonClick(event, size, "secondary-disabled")}
-                                    onRightClick={(event) => handleRightClick(event, size, "secondary-disabled")}
                                     disabled={!enableDisabledButtons}
                                 >
                                     Button
@@ -192,7 +168,6 @@ export default function Buttons() {
                                     size={size}
                                     isActive={activeButton === `danger-${size}`}
                                     onClick={(event) => handleButtonClick(event, size, "danger")}
-                                    onRightClick={(event) => handleRightClick(event, size, "danger")}
                                     disabled={false}
                                 >
                                     Button
@@ -208,7 +183,6 @@ export default function Buttons() {
                                     size={size}
                                     isActive={activeButton === `danger-disabled-${size}`}
                                     onClick={(event) => handleButtonClick(event, size, "danger-disabled")}
-                                    onRightClick={(event) => handleRightClick(event, size, "danger-disabled")}
                                     disabled={!enableDisabledButtons}
                                 >
                                     Button
@@ -230,23 +204,25 @@ export default function Buttons() {
                                     size={size}
                                     isActive={activeButton === `danger-lined-${size}`}
                                     onClick={(event) => handleButtonClick(event, size, "danger-lined")}
-                                    onRightClick={(event) => handleRightClick(event, size, "danger-lined")}
                                 >
                                     Button
                                 </DangerButtonLined>
                             ))}
                         </div>
                     </div>
+
                     {/* Pill Buttons */}
                     <h3 className="text-[25px] font-jost font-medium text-black mt-10">Pill</h3>
                     <div className="mt-2 w-full h-[3px] bg-black"></div>
                     <div className="mt-6">
-                                <Pill
-                                    options={["Selection title", "Selection title"]}
-                                    onSelect={(index) => {
-                                    console.log("Selected option:", index);
-                                }}
-                                        />
+                        <Pill
+                            options={["Selection title", "Selection title"]}
+                            onSelect={(index) => {
+                                console.log("Selected option:", index);
+                            }}
+                        />
+                    </div>
+
                     {/* Primary2 Buttons */}
                     <h3 className="text-[25px] font-jost font-medium text-black mt-10">Primary 2 Button</h3>
                     <div className="mt-2 w-full h-[3px] bg-black"></div>
@@ -260,7 +236,6 @@ export default function Buttons() {
                                     size={size}
                                     isActive={activeButton === `primary2-${size}`}
                                     onClick={(event) => handleButtonClick(event, size, "primary2")}
-                                    onRightClick={(event) => handleRightClick(event, size, "primary2")}
                                     disabled={false}
                                 >
                                     Button
@@ -268,17 +243,16 @@ export default function Buttons() {
                             ))}
                         </div>
                     </div>
-                    
+
                     {/* Upload Button */}
                     <h3 className="text-[25px] font-jost font-medium text-black mt-10">Upload Button</h3>
                     <div className="mt-2 w-full h-[3px] bg-black"></div>
 
                     <div className="mt-6">
-                        <UploadButton onUpload={handleFileUpload} />
+                        <UploadButton />
                     </div>
                 </div>
-            </div> 
-        </div>
+            </div>
         </AuthenticatedLayout>
     );
 }

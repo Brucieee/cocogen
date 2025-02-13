@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef, Children } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
-export default function SecondaryButton({ children, size, isActive, onClick, onRightClick, disabled }) {
+export default function SecondaryButton({ children, size, isActive, onClick, onRightClick, disabled, }) {
     const sizes = {
         huge: { width: "114px", height: "48px", textSize: "23px", expandedWidth: "160px", iconSize: "20px" },
         medium: { width: "91px", height: "44px", textSize: "16px", expandedWidth: "131px", iconSize: "16px" },
@@ -10,49 +10,30 @@ export default function SecondaryButton({ children, size, isActive, onClick, onR
 
     const { width, height, textSize, expandedWidth, iconSize } = sizes[size];
     const [isExpanded, setIsExpanded] = useState(false);
-    const buttonRef = useRef(null);
+    const [isClicked, setIsClicked] = useState(false);
 
-    // Sync isExpanded with isActive
     useEffect(() => {
-        setIsExpanded(isActive);
-    }, [isActive]);
+            setIsExpanded(isActive);
+            if (!isActive) {
+                setIsClicked(false);
+            }
+        }, [isActive]);
 
-    // Handle clicks outside the button
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (buttonRef.current && !buttonRef.current.contains(event.target)) {
+            if (!event.target.closest(".danger-button")) {
                 setIsExpanded(false);
+                setIsClicked(false);
             }
         };
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
+        window.addEventListener("click", handleClickOutside);
+        return () => window.removeEventListener("click", handleClickOutside);
     }, []);
-
-    // Handle button click
-    const handleClick = (event) => {
-        if (!disabled) {
-            event.stopPropagation();
-            setIsExpanded(true);
-            onClick && onClick(event);
-        }
-    };
-
-    // Handle right-click
-    const handleRightClick = (event) => {
-        if (!disabled) {
-            event.preventDefault();
-            event.stopPropagation();
-            setIsExpanded(true);
-            onRightClick && onRightClick(event);
-        }
-    };
-
+    
     return (
         <button
-            ref={buttonRef}
             className={`secondary-button inline-flex items-center justify-center rounded-[1px] leading-[28px] relative group transition-all duration-300
-                ${disabled ? "cursor-not-allowed text-[#A8D9D9] bg-[#C0E6E6]" : ""}
-            `}
+                ${disabled ? "cursor-not-allowed text-[#A8D9D9] bg-[#C0E6E6]" : ""}`}
             style={{
                 width: isExpanded ? expandedWidth : width,
                 height: height,
@@ -66,12 +47,27 @@ export default function SecondaryButton({ children, size, isActive, onClick, onR
                 backgroundColor: disabled
                     ? "#C0E6E6" // Disabled state
                     : isActive
-                    ? "#C0E6E6" // Active (clicked) state
+                    ? "#C0E6E6" // Active state, based on parent's state
                     : "white", // Default state
                 color: disabled ? "#A8D9D9" : "#008080",
             }}
-            onClick={handleClick}
-            onContextMenu={handleRightClick}
+            onClick={(event) => {
+                if (!disabled) {
+                    event.stopPropagation();
+                    setIsExpanded(true);
+                    setIsClicked(true);
+                    onClick && onClick(event);
+                }
+            }}
+            onContextMenu={(event) => {
+                if (!disabled) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    setIsExpanded(true);
+                    setIsClicked(true);
+                    onRightClick && onRightClick(event);
+                }
+            }}
             onMouseEnter={() => {
                 if (!disabled) {
                     setIsExpanded(true);
@@ -79,9 +75,10 @@ export default function SecondaryButton({ children, size, isActive, onClick, onR
             }}
             onMouseLeave={() => {
                 if (!disabled && !isActive) {
-                    setIsExpanded(false);
+                    setIsExpanded(false); // Keep it expanded only if active
                 }
             }}
+            disabled={disabled}
         >
             {!disabled && (
                 <img

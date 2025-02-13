@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 
-const UploadButton = ({ onUpload }) => {
+const UploadButton = () => {
     const fileInputRef = useRef(null);
 
     const handleClick = () => {
@@ -9,15 +9,16 @@ const UploadButton = ({ onUpload }) => {
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
-        if (file && onUpload) {
-            onUpload(file); 
+        if (file) {
+            console.log("Uploaded file:", file);
+            // Handle the uploaded file (e.g., upload to the server)
         }
     };
 
     return (
         <button
             className="inline-flex items-center justify-center gap-2 w-[149px] h-[44px] px-5 py-2.5 rounded bg-[#E4509A] text-white font-inter text-[16px] font-medium leading-6
-            hover:bg-[#C93D84] hover:shadow-md hover:rounded-[3px]
+            hover:bg-[#E4509A] hover:shadow-md hover:rounded-[3px]
             active:bg-[#EDCADC]"
             onClick={handleClick}
         >
@@ -26,7 +27,7 @@ const UploadButton = ({ onUpload }) => {
                 alt="Upload Icon" 
                 className="w-6 h-6 filter invert brightness-0 contrast-200" 
             />
-            Upload
+            Upload ID
             <input
                 type="file"
                 className="hidden"
