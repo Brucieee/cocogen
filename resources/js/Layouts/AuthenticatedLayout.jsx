@@ -57,6 +57,12 @@ export default function AuthenticatedLayout({ header, children }) {
                                 >
                                     Modals
                                 </NavLink>
+                                <NavLink
+                                    href={route('progressbar')}
+                                    active={route().current('progressbar')}
+                                >
+                                    Progress Bar
+                                </NavLink>
                             </div>
 
                         </div>

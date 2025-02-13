@@ -37,4 +37,10 @@ class HomeController extends Controller
 
         return Inertia::render('Modals');
     }
+
+    public function ProgressBar(){
+
+
+        return Inertia::render('ProgressBar');
+    }
 }

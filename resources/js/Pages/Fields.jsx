@@ -6,8 +6,9 @@ import InputFieldIcon from '../components/InputFieldWithIcon';
 import InputFieldInfo from '../components/InputFieldWithInfo';
 import InputFieldDisabled from '../components/InputDisabled';
 import InputMobile from '../components/InputMobile';
-import InputDropdown from '../components/DropDownWithSearch'; // Adjust the path as needed
 import DropdownWithSearch from "../components/DropDownWithSearch";
+import InputDate from "../components/InputDate";
+
 
 
 export default function Fields() {
@@ -44,6 +45,10 @@ export default function Fields() {
             <div>
                 <h3 className="text-primary font-semibold mb-4">Input with Dropdowns</h3>
                 <DropdownWithSearch label="Select Language" required={true} placeholder="Choose a language" />
+
+                <h3 className="text-primary font-semibold mb-4 mt-4">Input using Calendar</h3>
+                <InputDate label="Pick a Date" required />
+             
 
             </div>
         </div>
