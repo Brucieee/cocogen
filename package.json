@@ -24,6 +24,7 @@
     "dependencies": {
         "@fontsource/inter": "^5.1.1",
         "@fontsource/jost": "^5.1.2",
+        "framer-motion": "^12.4.2",
         "react-hot-toast": "^2.5.1"
     }
 }
