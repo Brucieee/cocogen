@@ -30,7 +30,7 @@ export default function PrimaryButton({ children, size = "medium", isActive, onC
         return () => window.removeEventListener("click", handleClickOutside);
     }, []);
 
-    const baseStyles = `inline-flex items-center justify-center border-[3px] border-solid rounded-[3px] leading-[28px] relative group transition-all duration-300 primary-button focus:outline-none`;
+    const baseStyles = `inline-flex items-center justify-center border-[1px] border-solid rounded-[3px] leading-[28px] relative group transition-all duration-300 primary-button focus:outline-none`;
 
     return (
         <button

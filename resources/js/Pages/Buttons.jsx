@@ -4,6 +4,11 @@ import React, { useState, useEffect } from "react";
 import PrimaryButton from "../Components/PrimaryButton";
 import SecondaryButton from "../Components/SecondaryButton";
 import PrimaryDropdownButton from "@/Components/PrimaryDropdownButton";
+import DangerButton from "@/Components/DangerButton";
+import DangerButtonLined from "@/Components/DangerButtonLined";
+import PrimaryButton2 from "@/Components/PrimaryButton2";
+import Pill from "@/Components/Pill";
+import UploadButton from "@/Components/UploadButton";
 
 export default function Buttons() {
     const [activeButton, setActiveButton] = useState(null); // Tracks active button (primary/secondary)
@@ -37,6 +42,11 @@ export default function Buttons() {
     const handleDropdownItemClick = (size, label) => {
         setSelectedOptions((prev) => ({ ...prev, [size]: label })); // Update selected option
         setActiveDropdown(null); // Close dropdown
+    };
+
+    const handleFileUpload = (file) => {
+        console.log("Uploaded file:", file);
+        // Handle the uploaded file (e.g., upload to the server)
     };
 
     // Handles clicks outside buttons/dropdowns
@@ -141,13 +151,14 @@ export default function Buttons() {
                             {["huge", "medium", "small", "tiny"].map((size, index) => (
                                 <SecondaryButton
                                     key={index}
-                                    text="Button"
                                     size={size}
                                     isActive={activeButton === `secondary-${size}`}
                                     onClick={(event) => handleButtonClick(event, size, "secondary")}
                                     onRightClick={(event) => handleRightClick(event, size, "secondary")}
                                     disabled={false}
-                                />
+                                >
+                                    Button
+                                </SecondaryButton>
                             ))}
                         </div>
 
@@ -156,18 +167,118 @@ export default function Buttons() {
                             {["huge", "medium", "small", "tiny"].map((size, index) => (
                                 <SecondaryButton
                                     key={index}
-                                    text="Button"
                                     size={size}
                                     isActive={activeButton === `secondary-disabled-${size}`}
                                     onClick={(event) => handleButtonClick(event, size, "secondary-disabled")}
                                     onRightClick={(event) => handleRightClick(event, size, "secondary-disabled")}
                                     disabled={!enableDisabledButtons}
-                                />
+                                >
+                                    Button
+                                </SecondaryButton>
                             ))}
                         </div>
                     </div>
+
+                    {/* Danger Buttons */}
+                    <h3 className="text-[25px] font-jost font-medium text-black mt-10">Danger Button</h3>
+                    <div className="mt-2 w-full h-[3px] bg-black"></div>
+
+                    <div className="grid grid-cols-2 gap-4 mt-6 text-left">
+                        {/* Enabled Danger Buttons */}
+                        <div className="flex flex-col items-left gap-4">
+                            {["huge", "medium", "small", "tiny"].map((size, index) => (
+                                <DangerButton
+                                    key={index}
+                                    size={size}
+                                    isActive={activeButton === `danger-${size}`}
+                                    onClick={(event) => handleButtonClick(event, size, "danger")}
+                                    onRightClick={(event) => handleRightClick(event, size, "danger")}
+                                    disabled={false}
+                                >
+                                    Button
+                                </DangerButton>
+                            ))}
+                        </div>
+
+                        {/* Disabled Danger Buttons */}
+                        <div className="flex flex-col items-left gap-4">
+                            {["huge", "medium", "small", "tiny"].map((size, index) => (
+                                <DangerButton
+                                    key={index}
+                                    size={size}
+                                    isActive={activeButton === `danger-disabled-${size}`}
+                                    onClick={(event) => handleButtonClick(event, size, "danger-disabled")}
+                                    onRightClick={(event) => handleRightClick(event, size, "danger-disabled")}
+                                    disabled={!enableDisabledButtons}
+                                >
+                                    Button
+                                </DangerButton>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Danger Lined Buttons */}
+                    <h3 className="text-[25px] font-jost font-medium text-black mt-10">Danger Lined Button</h3>
+                    <div className="mt-2 w-full h-[3px] bg-black"></div>
+
+                    <div className="grid grid-cols-1 gap-4 mt-6 text-left">
+                        {/* Enabled Danger Lined Buttons */}
+                        <div className="flex flex-col items-left gap-4">
+                            {["huge", "medium", "small", "tiny"].map((size, index) => (
+                                <DangerButtonLined
+                                    key={index}
+                                    size={size}
+                                    isActive={activeButton === `danger-lined-${size}`}
+                                    onClick={(event) => handleButtonClick(event, size, "danger-lined")}
+                                    onRightClick={(event) => handleRightClick(event, size, "danger-lined")}
+                                >
+                                    Button
+                                </DangerButtonLined>
+                            ))}
+                        </div>
+                    </div>
+                    {/* Pill Buttons */}
+                    <h3 className="text-[25px] font-jost font-medium text-black mt-10">Pill</h3>
+                    <div className="mt-2 w-full h-[3px] bg-black"></div>
+                    <div className="mt-6">
+                                <Pill
+                                    options={["Selection title", "Selection title"]}
+                                    onSelect={(index) => {
+                                    console.log("Selected option:", index);
+                                }}
+                                        />
+                    {/* Primary2 Buttons */}
+                    <h3 className="text-[25px] font-jost font-medium text-black mt-10">Primary 2 Button</h3>
+                    <div className="mt-2 w-full h-[3px] bg-black"></div>
+
+                    <div className="grid grid-cols-2 gap-4 mt-6 text-left">
+                        {/* Enabled Primary2 Buttons */}
+                        <div className="flex flex-col items-left gap-4">
+                            {["huge", "medium", "small", "tiny"].map((size, index) => (
+                                <PrimaryButton2
+                                    key={index}
+                                    size={size}
+                                    isActive={activeButton === `primary2-${size}`}
+                                    onClick={(event) => handleButtonClick(event, size, "primary2")}
+                                    onRightClick={(event) => handleRightClick(event, size, "primary2")}
+                                    disabled={false}
+                                >
+                                    Button
+                                </PrimaryButton2>
+                            ))}
+                        </div>
+                    </div>
+                    
+                    {/* Upload Button */}
+                    <h3 className="text-[25px] font-jost font-medium text-black mt-10">Upload Button</h3>
+                    <div className="mt-2 w-full h-[3px] bg-black"></div>
+
+                    <div className="mt-6">
+                        <UploadButton onUpload={handleFileUpload} />
+                    </div>
                 </div>
-            </div>
+            </div> 
+        </div>
         </AuthenticatedLayout>
     );
 }

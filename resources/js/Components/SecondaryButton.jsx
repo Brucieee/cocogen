@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Children } from "react";
 
-export default function SecondaryButton({ text, size, isActive, onClick, onRightClick, disabled }) {
+export default function SecondaryButton({ children, size, isActive, onClick, onRightClick, disabled }) {
     const sizes = {
         huge: { width: "114px", height: "48px", textSize: "23px", expandedWidth: "160px", iconSize: "20px" },
         medium: { width: "91px", height: "44px", textSize: "16px", expandedWidth: "131px", iconSize: "16px" },
@@ -50,7 +50,7 @@ export default function SecondaryButton({ text, size, isActive, onClick, onRight
     return (
         <button
             ref={buttonRef}
-            className={`secondary-button inline-flex items-center justify-center rounded-[3px] leading-[28px] relative group transition-all duration-300
+            className={`secondary-button inline-flex items-center justify-center rounded-[1px] leading-[28px] relative group transition-all duration-300
                 ${disabled ? "cursor-not-allowed text-[#A8D9D9] bg-[#C0E6E6]" : ""}
             `}
             style={{
@@ -66,7 +66,7 @@ export default function SecondaryButton({ text, size, isActive, onClick, onRight
                 backgroundColor: disabled
                     ? "#C0E6E6" // Disabled state
                     : isActive
-                    ? "#60B3B3" // Active (clicked) state
+                    ? "#C0E6E6" // Active (clicked) state
                     : "white", // Default state
                 color: disabled ? "#A8D9D9" : "#008080",
             }}
@@ -95,7 +95,7 @@ export default function SecondaryButton({ text, size, isActive, onClick, onRight
                     }}
                 />
             )}
-            {text}
+            {children}
         </button>
     );
 }

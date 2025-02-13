@@ -5,8 +5,8 @@ export default function PrimaryDropdownButton({
     size = "medium",
     disabled = false,
     options = [],
-    isOpen, // 👈 Accept `isOpen` from parent
-    onClick, // 👈 Accept `onClick` from parent
+    isOpen, // Accept `isOpen` from parent
+    onClick, // Accept `onClick` from parent
 }) {
     const sizes = {
         huge: { width: "144px", height: "48px", textSize: "23px", iconSize: "20px" },
@@ -16,13 +16,7 @@ export default function PrimaryDropdownButton({
     };
 
     const { width, height, textSize, iconSize } = sizes[size];
-    const [isActive, setIsActive] = useState(isOpen); // Track active state for styling
     const dropdownRef = useRef(null);
-
-    // Sync `isActive` with `isOpen`
-    useEffect(() => {
-        setIsActive(isOpen);
-    }, [isOpen]);
 
     // Handle clicks outside the dropdown
     useEffect(() => {
@@ -47,22 +41,18 @@ export default function PrimaryDropdownButton({
         <div className="relative inline-block dropdown-container" ref={dropdownRef}>
             {/* Dropdown Button */}
             <button
-                className={`inline-flex items-center justify-between rounded-[3px] px-3 transition-all duration-300 ${
-                    disabled
-                        ? "cursor-not-allowed bg-[#C0E6E6]"
-                        : isActive
-                        ? "bg-[#C0E6E6]" // Active state
-                        : "bg-teal-700 hover:bg-[#60B3B3]" // Default and hover state
-                }`}
+                className="inline-flex items-center justify-between rounded-[3px] px-3 transition-all duration-300"
                 style={{
+                    backgroundColor: isOpen ? "#60B3B3" : "#008080", // Default and active color
                     color: "white",
                     width: width,
                     height: height,
                     fontSize: textSize,
                     outline: "none",
                     boxShadow: "none",
+                    cursor: disabled ? "not-allowed" : "pointer",
                 }}
-                onClick={onClick} // 👈 Use the parent state management
+                onClick={onClick} // Use the parent state management
                 disabled={disabled}
             >
                 {children}
@@ -82,15 +72,12 @@ export default function PrimaryDropdownButton({
                 className={`absolute left-0 mt-2 min-w-[50%] bg-white rounded shadow-lg transition-all duration-300 overflow-hidden z-50 ${
                     isOpen ? "opacity-100 scale-100 max-h-60" : "opacity-0 scale-95 max-h-0 pointer-events-none"
                 }`}
-                style={{
-                    transformOrigin: "top",
-                    zIndex: 50,
-                }}
+                style={{ transformOrigin: "top", zIndex: 50 }}
             >
                 {dropdownOptions.map((option, index) => (
                     <button
                         key={index}
-                        className="w-full px-3 py-2 text-left text-gray-800 hover:bg-gray-200 transition"
+                        className="w-full px-3 py-2 text-left text-gray-800 transition"
                         onClick={() => {
                             option.onClick();
                             onClick(); // Close dropdown after selection
