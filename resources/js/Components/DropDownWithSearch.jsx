@@ -16,7 +16,7 @@ export default function InputDropdown({ label, required, placeholder }) {
 
     return (
         <div className="w-[214px] group relative flex flex-col transition-all duration-300 mt-4">
-            <label className="text-[10px] font-normal transition-all duration-300 mb-1 ml-2.5 text-primary group-hover:text-secondary"> 
+            <label className="text-[10px] font-normal transition-all duration-300 mb-1 ml-2.5 text-teal-9 group-hover:text-surfaces-5"> 
                 {label} {required && <span className="text-red-600">*</span>}
             </label>
             <div className="relative">
@@ -26,7 +26,7 @@ export default function InputDropdown({ label, required, placeholder }) {
                     value={selectedValue}
                     readOnly
                     onClick={() => setIsOpen(!isOpen)}
-                    className="h-[44px] w-[214px] border-0 border-b-2 bg-transparent flex items-center pb-[10px] gap-2.5 p-[10px] text-[14px] font-normal outline-none transition-all duration-300 focus:ring-0 focus:outline-none border-secondary text-gray-500 group-hover:bg-backgroundhover group-hover:border-primary group-hover:placeholder-black cursor-pointer"
+                    className="h-[44px] w-[214px] border-0 border-b-2 bg-transparent flex items-center pb-[10px] gap-2.5 p-[10px] text-[14px] font-normal outline-none transition-all duration-300 focus:ring-0 focus:outline-none border-surfaces-5 text-gray-500 group-hover:bg-teal-1 group-hover:border-teal-9 group-hover:placeholder-black cursor-pointer"
                 />
                 <img 
                     src={isOpen ? "/icons/Icon-ArrowUp.svg" : "/icons/Icon-ArrowDown.svg"} 

@@ -12,7 +12,7 @@ export default function InputFieldDisabled({ label, required, placeholder, hasIc
                     type="text"
                     placeholder={placeholder}
                     disabled
-                    className="h-[44px] w-[214px] border-0 border-b-2 pl-2.5 bg-transparent flex items-center pb-[10px] pl-3 gap-2.5 pl-[0px] text-[14px] font-normal outline-none transition-all duration-300 border-gray-400 text-gray-500 cursor-not-allowed hover:bg-disabledbg hover:border-b-primary hover:placeholder-black"
+                    className="h-[44px] w-[214px] border-0 border-b-2 bg-transparent flex items-center pb-[10px] pl-3 gap-2.5 text-[14px] font-normal outline-none transition-all duration-300 border-gray-400 text-gray-500 cursor-not-allowed hover:bg-disabledbg hover:border-b-primary hover:placeholder-black"
                 />
                 {hasIcon && (
                     <img 

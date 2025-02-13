@@ -7,7 +7,7 @@ export default function Modals() {
         <AuthenticatedLayout
             header={
                 <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Home
+                    Modals
                 </h2>
             }
         >
