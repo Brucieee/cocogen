@@ -32,6 +32,7 @@ Route::get('/fields', [HomeController::class, 'fields'])->name('fields');
 Route::get('/modals', [HomeController::class, 'modals'])->name('modals');
 Route::get('/progressbar', [HomeController::class, 'progressbar'])->name('progressbar');
 Route::get('/reminder', [HomeController::class, 'reminder'])->name('reminder');
+Route::get('/typography', [HomeController::class, 'typography'])->name('typography');
 
 
 

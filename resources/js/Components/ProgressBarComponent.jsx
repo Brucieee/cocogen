@@ -10,11 +10,11 @@ const StepIndicator = ({ step, index, currentStep, completedSteps }) => {
     <div className="flex flex-col items-center text-center relative z-10">
       <div
         className={`flex items-center justify-center w-[35px] h-[35px] rounded-full border-2 bg-surfaces-1 z-10 ${
-          isCompleted ? " text-white" :
+          isCompleted ? " text-white border-[#09A12A]" :
           isActive ? "border-teal-8 text-teal-8 bg-[#F7FFFF] " : "border-surfaces-2 text-gray-400 bg-surfaces-2"
         }`}
       >
-        {isCompleted ? <img src="/icons/checkicon.svg" alt="Completed" className="w-[35px] h-[35px]" /> : index + 1}
+        {isCompleted ? <img src="/icons/Icon-CheckWhiteCircleGreen.svg" alt="Completed" className="w-[35px] h-[35px]" /> : index + 1}
       </div>
       <span className={`text-sm font-medium mt-2 ${isActive ? "text-black font-bold" : "text-gray-500"}`}>{step}</span>
       <span className={`text-xs ${isCompleted ? "text-green-500" : isActive ? "text-teal-8" : "text-gray-400"}`}>

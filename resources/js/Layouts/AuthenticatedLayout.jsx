@@ -51,27 +51,38 @@ export default function AuthenticatedLayout({ header, children }) {
                                 >
                                     Fields
                                 </NavLink>
+
                                 <NavLink
                                     href={route('modals')}
                                     active={route().current('modals')}
                                 >
                                     Modals
                                 </NavLink>
+
                                 <NavLink
                                     href={route('progressbar')}
                                     active={route().current('progressbar')}
                                 >
                                     Progress Bar
                                 </NavLink>
+
                                 <NavLink
                                     href={route('typography')}
                                     active={route().current('typography')}
                                 >
                                     Typography
+                                </NavLink>
+
+                                <NavLink
+                                    
                                     href={route('reminder')}
                                     active={route().current('reminder')}
+                                >
                                     Reminder
                                 </NavLink>
+
+
+
                             </div>
 
                         </div>
