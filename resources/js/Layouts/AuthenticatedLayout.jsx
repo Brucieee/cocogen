@@ -63,6 +63,12 @@ export default function AuthenticatedLayout({ header, children }) {
                                 >
                                     Progress Bar
                                 </NavLink>
+                                <NavLink
+                                    href={route('typography')}
+                                    active={route().current('typography')}
+                                >
+                                    Typography
+                                </NavLink>
                             </div>
 
                         </div>

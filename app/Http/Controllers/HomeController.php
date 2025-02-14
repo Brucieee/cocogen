@@ -40,7 +40,11 @@ class HomeController extends Controller
 
     public function ProgressBar(){
 
-
         return Inertia::render('ProgressBar');
+    }
+
+    public function Typography(){
+
+        return Inertia::render('Typography');
     }
 }
