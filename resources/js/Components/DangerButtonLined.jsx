@@ -36,13 +36,22 @@ export default function DangerButtonLined({
         return () => window.removeEventListener("click", handleClickOutside);
     }, []);
 
+    const handleMouseDown = () => {
+        setIsExpanded(true);
+        setIsClicked(true);
+    };
+
+    const handleMouseUp = () => {
+        setIsExpanded(true); // Keep expanded after release
+    };
+
     const baseStyles = `inline-flex items-center justify-center border-[1px] border-solid rounded-[3px] leading-[28px] relative group transition-all duration-300 danger-button-lined focus:outline-none`;
 
     return (
         <button
             className={baseStyles}
             style={{
-                color: "#DD0707",  // Text & Arrow always #DD0707
+                color: "#DD0707",
                 width: isExpanded ? expandedWidth : width,
                 height: height,
                 fontSize: textSize,
@@ -54,6 +63,8 @@ export default function DangerButtonLined({
                 outline: "none",
                 boxShadow: "none",
             }}
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
             onClick={(event) => {
                 event.stopPropagation();
                 setIsExpanded(true);
@@ -68,7 +79,7 @@ export default function DangerButtonLined({
                 onRightClick && onRightClick(event);
             }}
             onMouseEnter={() => setIsExpanded(true)}
-            onMouseLeave={() => !isActive && setIsExpanded(false)}
+            onMouseLeave={() => !isClicked && setIsExpanded(false)}
         >
             <img
                 src="/icons/Icon-ArrowRight.svg"

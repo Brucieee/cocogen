@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import ModalComponent from "../Components/Modal";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import DeletePhoto from "../Components/DeletePhoto"; 
 
 export default function Modals() {
-  const [openModal, setOpenModal] = useState(null); // Track which modal is open
+  const [openModal, setOpenModal] = useState(null); 
 
   const modalData = [
     {
@@ -79,6 +80,10 @@ export default function Modals() {
         "is aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
       ],
     },
+    {
+      id: "delete-photo", // Unique ID for DeletePhoto
+      title: "Delete Photo", // Button label
+    }
   ];
 
   return (
@@ -97,15 +102,24 @@ export default function Modals() {
 
       {/* Render Modals */}
       {modalData.map((modal) => (
-        <ModalComponent
-          key={modal.id}
-          isOpen={openModal === modal.id}
-          onClose={() => setOpenModal(null)}
-          image={modal.image}
-          title={modal.title}
-          subtitle={modal.subtitle}
-          paragraphs={modal.paragraphs}
-        />
+        modal.id === "delete-photo" ? (
+          openModal === "delete-photo" && (
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+              <DeletePhoto onClose={() => setOpenModal(null)} />
+
+            </div>
+          )
+        ) : (
+          <ModalComponent
+            key={modal.id}
+            isOpen={openModal === modal.id}
+            onClose={() => setOpenModal(null)}
+            image={modal.image}
+            title={modal.title}
+            subtitle={modal.subtitle}
+            paragraphs={modal.paragraphs}
+          />
+        )
       ))}
     </AuthenticatedLayout>
   );
