@@ -30,11 +30,22 @@ export default function DangerButton({ children, size = "medium", isActive, onCl
         return () => window.removeEventListener("click", handleClickOutside);
     }, []);
 
-    const baseStyles = `inline-flex items-center justify-center border-[1px] border-solid rounded-[3px] leading-[28px] relative group transition-all duration-300 danger-button focus:outline-none`;
+    const handleMouseDown = () => {
+        if (!disabled) {
+            setIsExpanded(true);
+            setIsClicked(true);
+        }
+    };
+
+    const handleMouseUp = () => {
+        if (!disabled) {
+            setIsExpanded(true); // Keep expanded after release
+        }
+    };
 
     return (
         <button
-            className={`${baseStyles} ${disabled ? "cursor-not-allowed" : ""}`}
+            className={`inline-flex items-center justify-center border-[1px] border-solid rounded-[3px] leading-[28px] relative group transition-all duration-300 danger-button focus:outline-none ${disabled ? "cursor-not-allowed" : ""}`}
             style={{
                 color: disabled ? "#FFE2E2" : "#FFFFFF",
                 width: isExpanded && !disabled ? expandedWidth : width,
@@ -48,6 +59,8 @@ export default function DangerButton({ children, size = "medium", isActive, onCl
                 outline: "none",
                 boxShadow: "none",
             }}
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
             onClick={(event) => {
                 if (!disabled) {
                     event.stopPropagation();
@@ -71,18 +84,17 @@ export default function DangerButton({ children, size = "medium", isActive, onCl
                 }
             }}
             onMouseLeave={() => {
-                if (!disabled && !isActive) {
+                if (!disabled && !isClicked) {
                     setIsExpanded(false);
                 }
             }}
+            disabled={disabled}
         >
             {!disabled && (
                 <img
                     src="/icons/Icon-ArrowRight.svg"
                     alt="Arrow"
-                    className={`absolute left-3 transition-opacity duration-300 ${
-                        isExpanded ? "opacity-100" : "opacity-0"
-                    }`}
+                    className={`absolute left-3 transition-opacity duration-300 ${isExpanded ? "opacity-100" : "opacity-0"}`}
                     style={{ 
                         filter: "invert(100%) brightness(100%) grayscale(100%)",
                         width: iconSize,
