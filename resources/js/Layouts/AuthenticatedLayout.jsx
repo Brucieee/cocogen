@@ -68,6 +68,9 @@ export default function AuthenticatedLayout({ header, children }) {
                                     active={route().current('typography')}
                                 >
                                     Typography
+                                    href={route('reminder')}
+                                    active={route().current('reminder')}
+                                    Reminder
                                 </NavLink>
                             </div>
 

@@ -54,7 +54,7 @@ export default function PrimaryDropdownButton({
             {/* Dropdown Button */}
             <button
                 className={`inline-flex items-center justify-between w-full rounded-[3px] px-3 transition-all duration-300 ${
-                    disabled ? "bg-[#C0E6E6] text-[#FFFFFF] cursor-not-allowed opacity-50" : "bg-[#008080] text-white"
+                    disabled ? "bg-[#C0E6E6] text-[#FFFFFF  ] cursor-not-allowed opacity-50" : "bg-[#008080] text-white"
                 }`}
                 style={{
                     width: width,

@@ -46,5 +46,11 @@ class HomeController extends Controller
     public function Typography(){
 
         return Inertia::render('Typography');
+
+    }
+    public function Reminder(){
+
+
+        return Inertia::render('Reminder');
     }
 }
