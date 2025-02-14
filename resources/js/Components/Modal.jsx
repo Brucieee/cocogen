@@ -1,65 +1,68 @@
-import {
-    Dialog,
-    DialogPanel,
-    Transition,
-    TransitionChild,
-} from '@headlessui/react';
+import React from "react";
+import { motion } from "framer-motion";
+import ModalButton from "./ModalButton";
 
-export default function Modal({
-    children,
-    show = false,
-    maxWidth = '2xl',
-    closeable = true,
-    onClose = () => {},
-}) {
-    const close = () => {
-        if (closeable) {
-            onClose();
-        }
-    };
+const ModalComponent = ({ 
+  isOpen, 
+  onClose, 
+  image, 
+  title, 
+  subtitle, 
+  paragraphs = [] 
+}) => {
+  if (!isOpen) return null; // Hide modal if not open
 
-    const maxWidthClass = {
-        sm: 'sm:max-w-sm',
-        md: 'sm:max-w-md',
-        lg: 'sm:max-w-lg',
-        xl: 'sm:max-w-xl',
-        '2xl': 'sm:max-w-2xl',
-    }[maxWidth];
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.9 }}
+        transition={{ duration: 0.3 }}
+        className="relative bg-white rounded-2xl shadow-lg flex flex-col max-w-[479px] max-h-[90vh] overflow-visible"
+      >
+        {/* Close Button - Now fully visible */}
+        <button 
+          onClick={onClose} 
+          className="absolute right-[-12px] top-[-10px] flex items-center justify-center p-[12px] rounded-full bg-[#ECECEC] shadow-md hover:bg-gray-300 transition z-20"
+          style={{ width: "40px", height: "40px" }} // Ensures a perfect circle
+        >
+          <img src="../icons/Icon-CloseModal.svg" alt="Close" className="w-[20px] h-[20px]" />
+        </button>
 
-    return (
-        <Transition show={show} leave="duration-200">
-            <Dialog
-                as="div"
-                id="modal"
-                className="fixed inset-0 z-50 flex transform items-center overflow-y-auto px-4 py-6 transition-all sm:px-0"
-                onClose={close}
+        {/* Top Section: Image */}
+        <div 
+          className="h-[187px] bg-cover bg-center rounded-t-lg border-t-8 border-teal-600"
+          style={{ backgroundImage: `url(${image})` }}
+        />
+
+        {/* Title & Subtitle */}
+        <div className="w-full px-0 py-[15px] flex flex-col justify-center items-center text-center">
+          <h2 className="text-[23px] font-bold text-[#2D2727]">{title}</h2>
+          <h3 className="text-[16px] text-[#585858] font-normal mt-[8px]">{subtitle}</h3>
+        </div>
+
+        {/* Content Section */}
+        <div className="w-full px-[35px] pt-[25px] flex flex-col items-center">
+          {paragraphs.map((text, index) => (
+            <div 
+              key={index} 
+              className={`flex items-center gap-[15px] w-full text-[#3B3939] 
+                ${index !== paragraphs.length - 1 ? "mb-[25px]" : ""}`} // Adds 25px margin only between items
             >
-                <TransitionChild
-                    enter="ease-out duration-300"
-                    enterFrom="opacity-0"
-                    enterTo="opacity-100"
-                    leave="ease-in duration-200"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                >
-                    <div className="absolute inset-0 bg-gray-500/75" />
-                </TransitionChild>
+              <img src="../icons/Icon-CheckModal.svg" alt="Check" className="w-[20px] h-[20px]" />
+              <p className="w-[382px] text-[14px] font-normal leading-[24px]">{text}</p>
+            </div>
+          ))}
+        </div>
 
-                <TransitionChild
-                    enter="ease-out duration-300"
-                    enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                    enterTo="opacity-100 translate-y-0 sm:scale-100"
-                    leave="ease-in duration-200"
-                    leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-                    leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                >
-                    <DialogPanel
-                        className={`mb-6 transform overflow-hidden rounded-lg bg-white shadow-xl transition-all sm:mx-auto sm:w-full ${maxWidthClass}`}
-                    >
-                        {children}
-                    </DialogPanel>
-                </TransitionChild>
-            </Dialog>
-        </Transition>
-    );
-}
+        {/* Modal Button */}
+        <div className="flex justify-center p-[35px]">
+          <ModalButton onClick={onClose} />
+        </div>
+      </motion.div>
+    </div>
+  );
+};
+
+export default ModalComponent;
