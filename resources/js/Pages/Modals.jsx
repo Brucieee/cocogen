@@ -8,7 +8,7 @@ export default function Modals() {
   const modalData = [
     {
       id: 1,
-      image: "../assets/modalPicture1.png",
+      image: "/assets/modalPicture1.png",
       title: "Auto Excel Plus",
       subtitle: "Shift to a broader protection",
       paragraphs: [
@@ -19,7 +19,7 @@ export default function Modals() {
     },
     {
       id: 2,
-      image: "../assets/modalPicture2.png",
+      image: "/assets/modalPicture2.png",
       title: "Domestic Travel Plus",
       subtitle: "Peace of mind for local travelers",
       paragraphs: [
@@ -30,7 +30,7 @@ export default function Modals() {
     },
     {
       id: 3,
-      image: "../assets/modalPicture3.png",
+      image: "/assets/modalPicture3.png",
       title: "International Travel Excel Plus",
       subtitle: "Best buddy to a hassle-free journey",
       paragraphs: [
@@ -40,7 +40,7 @@ export default function Modals() {
     },
     {
       id: 4,
-      image: "../assets/modalPicture4.png",
+      image: "/assets/modalPicture4.png",
       title: "CTPL",
       subtitle: "Compulsory Third Party Liability required for LTO registration",
       paragraphs: [
@@ -51,7 +51,7 @@ export default function Modals() {
     },
     {
       id: 5,
-      image: "../assets/modalPicture5.png",
+      image: "/assets/modalPicture5.png",
       title: "Hackguard",
       subtitle: "Hackguard brief description",
       paragraphs: [
@@ -61,7 +61,7 @@ export default function Modals() {
     },
     {
       id: 6,
-      image: "../assets/modalPicture6.png",
+      image: "/assets/modalPicture6.png",
       title: "Pro-Tech",
       subtitle: "New essential for desktops and laptops",
       paragraphs: [
@@ -70,7 +70,7 @@ export default function Modals() {
     },
     {
       id: 7,
-      image: "../assets/modalPicture7.png",
+      image: "/assets/modalPicture7.png",
       title: "Auto Excel Plus",
       subtitle: "Shift to a broader protection",
       paragraphs: [
@@ -79,23 +79,23 @@ export default function Modals() {
         "is aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
       ],
     },
-
   ];
 
   return (
     <AuthenticatedLayout>
-      <div className="grid grid-cols-3 gap-4 p-6 min-h-screen bg-gray-100">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-6 min-h-screen bg-gray-100">
         {modalData.map((modal) => (
           <button
             key={modal.id}
             onClick={() => setOpenModal(modal.id)}
-            className="px-4 py-2 bg-blue-600 text-white rounded"
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg transition-all hover:bg-blue-700"
           >
             Open {modal.title}
           </button>
         ))}
       </div>
 
+      {/* Render Modals */}
       {modalData.map((modal) => (
         <ModalComponent
           key={modal.id}
@@ -105,14 +105,6 @@ export default function Modals() {
           title={modal.title}
           subtitle={modal.subtitle}
           paragraphs={modal.paragraphs}
-          ButtonComponent={() => (
-            <button
-              onClick={() => setOpenModal(null)}
-              className="px-4 py-2 bg-green-500 text-white rounded"
-            >
-              Confirm
-            </button>
-          )}
         />
       ))}
     </AuthenticatedLayout>

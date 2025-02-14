@@ -43,4 +43,10 @@ class HomeController extends Controller
 
         return Inertia::render('ProgressBar');
     }
+
+    public function Reminder(){
+
+
+        return Inertia::render('Reminder');
+    }
 }
