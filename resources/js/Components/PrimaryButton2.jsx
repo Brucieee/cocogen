@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
 
-export default function PrimaryButton2({ 
-    children, 
-    size = "medium", 
-    isActive, 
-    onClick, 
-    onRightClick, 
-    disabled 
+export default function PrimaryButton2({
+    children,
+    size = "medium",
+    isActive,
+    onClick,
+    onRightClick,
+    disabled,
 }) {
     const sizes = {
-        huge: { width: "114px", height: "48px", textSize: "23px", expandedWidth: "160px", iconSize: "20px" },
-        medium: { width: "91px", height: "44px", textSize: "16px", expandedWidth: "131px", iconSize: "16px"},
-        small: { width: "79px", height: "40px", textSize: "12px", expandedWidth: "105px", iconSize: "14px" },
-        tiny: { width: "72px", height: "32px", textSize: "10px", expandedWidth: "85px", iconSize: "12px" },
+        huge: { width: "114px", height: "48px", textSize: "23px", expandedWidth: "160px", iconSize: "23px" },
+        medium: { width: "91px", height: "44px", textSize: "16px", expandedWidth: "131px", iconSize: "16px" },
+        small: { width: "79px", height: "40px", textSize: "12px", expandedWidth: "105px", iconSize: "12px" },
+        tiny: { width: "72px", height: "32px", textSize: "10px", expandedWidth: "85px", iconSize: "10px" },
     };
 
     const { width, height, textSize, expandedWidth, iconSize } = sizes[size];
@@ -47,7 +47,12 @@ export default function PrimaryButton2({
                 width: isExpanded && !disabled ? expandedWidth : width,
                 height: height,
                 fontSize: textSize,
-                backgroundColor: isClicked ? "#FFFFFF" : disabled ? "#F3CDE0" : "#E4509A",
+                fontWeight: 500,
+                backgroundColor: isClicked
+                    ? "#FFFFFF"
+                    : disabled
+                    ? "#F3CDE0"
+                    : "#E4509A",
                 borderColor: "#E4509A",
                 paddingLeft: isExpanded && !disabled ? "25px" : "12px",
                 paddingRight: isExpanded && !disabled ? "10px" : "12px",
@@ -87,10 +92,12 @@ export default function PrimaryButton2({
                 <img
                     src="/icons/Icon-ArrowRight.svg"
                     alt="Arrow"
-                    className={`absolute left-3 transition-opacity duration-300 ${isExpanded ? "opacity-100" : "opacity-0"}`}
-                    style={{ 
-                        filter: isClicked 
-                            ? "invert(15%) sepia(100%) saturate(3000%) hue-rotate(315deg) brightness(90%) contrast(110%)" 
+                    className={`absolute left-3 transition-opacity duration-300 ${
+                        isExpanded ? "opacity-100" : "opacity-0"
+                    }`}
+                    style={{
+                        filter: isClicked
+                            ? "invert(15%) sepia(100%) saturate(3000%) hue-rotate(315deg) brightness(90%) contrast(110%)"
                             : "invert(100%) brightness(100%) grayscale(100%)",
                         width: iconSize,
                         height: iconSize,

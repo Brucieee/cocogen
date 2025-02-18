@@ -4,8 +4,8 @@ export default function SecondaryButton({ children, size, isActive, onClick, onR
     const sizes = {
         huge: { width: "114px", height: "48px", textSize: "23px", expandedWidth: "160px", iconSize: "20px" },
         medium: { width: "91px", height: "44px", textSize: "16px", expandedWidth: "131px", iconSize: "16px" },
-        small: { width: "79px", height: "40px", textSize: "12px", expandedWidth: "105px", iconSize: "14px" },
-        tiny: { width: "72px", height: "32px", textSize: "10px", expandedWidth: "85px", iconSize: "12px" },
+        small: { width: "79px", height: "40px", textSize: "12px", expandedWidth: "105px", iconSize: "12px" },
+        tiny: { width: "72px", height: "32px", textSize: "10px", expandedWidth: "85px", iconSize: "10px" },
     };
 
     const { width, height, textSize, expandedWidth, iconSize } = sizes[size];
@@ -38,6 +38,7 @@ export default function SecondaryButton({ children, size, isActive, onClick, onR
                 width: isExpanded ? expandedWidth : width,
                 height: height,
                 fontSize: textSize,
+                fontWeight: 500,
                 paddingLeft: isExpanded ? "25px" : "12px",
                 paddingRight: isExpanded ? "10px" : "12px",
                 transition: "all 0.3s ease-in-out",

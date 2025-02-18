@@ -39,4 +39,4 @@ Route::get('/typography', [HomeController::class, 'typography'])->name('typograp
 
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

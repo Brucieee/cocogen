@@ -9,10 +9,10 @@ export default function PrimaryDropdownButton({
     onClick,
 }) {
     const sizes = {
-        huge: { width: "144px", height: "48px", textSize: "20px" },
-        medium: { width: "116px", height: "44px", textSize: "15px" },
-        small: { width: "101px", height: "40px", textSize: "10px" },
-        tiny: { width: "91px", height: "32px", textSize: "9px" },
+        huge: { width: "144px", height: "48px", textSize: "23px" },
+        medium: { width: "116px", height: "44px", textSize: "16px" },
+        small: { width: "101px", height: "40px", textSize: "12px" },
+        tiny: { width: "91px", height: "32px", textSize: "10px" },
     };
 
     const { width, height, textSize } = sizes[size];
@@ -47,19 +47,19 @@ export default function PrimaryDropdownButton({
         }
         setIsOpen(!isOpen); // Toggle dropdown visibility
     };
-    
 
     return (
         <div className="relative inline-block w-full" ref={dropdownRef}>
             {/* Dropdown Button */}
             <button
                 className={`inline-flex items-center justify-between w-full rounded-[3px] px-3 transition-all duration-300 ${
-                    disabled ? "bg-[#C0E6E6] text-[#FFFFFF  ] cursor-not-allowed opacity-50" : "bg-[#008080] text-white"
+                    disabled ? "bg-[#C0E6E6] text-[#FFFFFF] cursor-not-allowed opacity-50" : "bg-[#008080] text-white"
                 }`}
                 style={{
                     width: width,
                     height: height,
                     fontSize: textSize,
+                    fontWeight: 500,
                     outline: "none",
                 }}
                 onClick={handleClick}
@@ -84,6 +84,7 @@ export default function PrimaryDropdownButton({
                         <button
                             key={index}
                             className="w-full px-3 py-2 text-left text-gray-800 transition hover:bg-gray-200"
+                            style={{ fontWeight: 500 }} // Ensure dropdown items also have font-weight 500
                             onClick={() => handleDropdownItemClick(option.label)}
                         >
                             {option.label}

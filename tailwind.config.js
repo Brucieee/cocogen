@@ -1,6 +1,30 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
 
+const sizes = {
+    h1: '80px', h2: '60px', h3: '40px', h4: '30px', h5: '23px', 
+    b: '16px', c: '14px', t: '12px', f: '10px'
+};
+
+const weights = { hb: 900, b: 700, m: 500, r: 400, l: 300 };
+
+const generateFontSizes = () => {
+    const fontSize = {};
+    Object.entries(weights).forEach(([prefix, weight]) => {
+        Object.entries(sizes).forEach(([key, size]) => {
+            fontSize[`${prefix}-${key}`] = [size, { fontWeight: weight }];
+        });
+    });
+    return fontSize;
+};
+
+const generateTextColors = () => {
+    return Object.keys(generateFontSizes()).reduce((acc, key) => {
+        acc[key] = '#000000';
+        return acc;
+    }, {});
+};
+
 export default {
     content: [
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
@@ -16,169 +40,44 @@ export default {
                 jost: ['Jost', 'sans-serif'],
                 inter: ['Inter', 'sans-serif'],
             },
-            fontSize: {
-                'hb-h1': ['80px', { fontWeight: '900' }],
-                'hb-h2': ['60px', { fontWeight: '900' }], 
-                'hb-h3': ['40px', { fontWeight: '900' }], 
-                'hb-h4': ['30px', { fontWeight: '900' }], 
-                'hb-h5': ['23px', { fontWeight: '900' }], 
-                'hb-b': ['16px', { fontWeight: '900' }], 
-                'hb-c': ['14px', { fontWeight: '900' }], 
-                'hb-t': ['12px', { fontWeight: '900' }], 
-                'hb-f': ['10px', { fontWeight: '900' }], 
-
-                'b-h1': ['80px', { fontWeight: '700' }],
-                'b-h2': ['60px', { fontWeight: '700' }], 
-                'b-h3': ['40px', { fontWeight: '700' }], 
-                'b-h4': ['30px', { fontWeight: '700' }], 
-                'b-h5': ['23px', { fontWeight: '700' }], 
-                'b-b': ['16px', { fontWeight: '700' }], 
-                'b-c': ['14px', { fontWeight: '700' }], 
-                'b-t': ['12px', { fontWeight: '700' }], 
-                'b-f': ['10px', { fontWeight: '700' }],
-                
-                'm-h1': ['80px', { fontWeight: '500' }],
-                'm-h2': ['60px', { fontWeight: '500' }], 
-                'm-h3': ['40px', { fontWeight: '500' }], 
-                'm-h4': ['30px', { fontWeight: '500' }], 
-                'm-h5': ['23px', { fontWeight: '500' }], 
-                'm-b': ['16px', { fontWeight: '500' }], 
-                'm-c': ['14px', { fontWeight: '500' }], 
-                'm-t': ['12px', { fontWeight: '500' }], 
-                'm-f': ['10px', { fontWeight: '500' }],
-
-                'r-h1': ['80px', { fontWeight: '400' }],
-                'r-h2': ['60px', { fontWeight: '400' }], 
-                'r-h3': ['40px', { fontWeight: '400' }], 
-                'r-h4': ['30px', { fontWeight: '400' }], 
-                'r-h5': ['23px', { fontWeight: '400' }], 
-                'r-b': ['16px', { fontWeight: '400' }], 
-                'r-c': ['14px', { fontWeight: '400' }], 
-                'r-t': ['12px', { fontWeight: '400' }], 
-                'r-f': ['10px', { fontWeight: '400' }],
-
-                'l-h1': ['80px', { fontWeight: '300' }],
-                'l-h2': ['60px', { fontWeight: '300' }], 
-                'l-h3': ['40px', { fontWeight: '300' }], 
-                'l-h4': ['30px', { fontWeight: '300' }], 
-                'l-h5': ['23px', { fontWeight: '300' }], 
-                'l-b': ['16px', { fontWeight: '300' }], 
-                'l-c': ['14px', { fontWeight: '300' }], 
-                'l-t': ['12px', { fontWeight: '300' }], 
-                'l-f': ['10px', { fontWeight: '300' }],
-            },
-            
-            textColor: {
-                'hb-h1' : '#000000',
-                'hb-h2' : '#000000',
-                'hb-h3' : '#000000',
-                'hb-h4' : '#000000',
-                'hb-h5' : '#000000',
-                'hb-b' : '#000000',
-                'hb-c' : '#000000',
-                'hb-t' : '#000000',
-                'hb-f' : '#000000',
-
-                'b-h1' : '#000000',
-                'b-h2' : '#000000',
-                'b-h3' : '#000000',
-                'b-h4' : '#000000',
-                'b-h5' : '#000000',
-                'b-b' : '#000000',
-                'b-c' : '#000000',
-                'b-t' : '#000000',
-                'b-f' : '#000000',
-
-                'm-h1' : '#000000',
-                'm-h2' : '#000000',
-                'm-h3' : '#000000',
-                'm-h4' : '#000000',
-                'm-h5' : '#000000',
-                'm-b' : '#000000',
-                'm-c' : '#000000',
-                'm-t' : '#000000',
-                'm-f' : '#000000',
-
-                'r-h1' : '#000000',
-                'r-h2' : '#000000',
-                'r-h3' : '#000000',
-                'r-h4' : '#000000',
-                'r-h5' : '#000000',
-                'r-b' : '#000000',
-                'r-c' : '#000000',
-                'r-t' : '#000000',
-                'r-f' : '#000000',
-
-                'l-h1' : '#000000',
-                'l-h2' : '#000000',
-                'l-h3' : '#000000',
-                'l-h4' : '#000000',
-                'l-h5' : '#000000',
-                'l-b' : '#000000',
-                'l-c' : '#000000',
-                'l-t' : '#000000',
-                'l-f' : '#000000',
-            },
+            fontSize: generateFontSizes(),
+            textColor: generateTextColors(),
             colors: {
                 primary: {
-                    teal: "#008080",
-                    "bright-teal": "#0CC8C8",
-                    pink: "#E4509A",
-                    "light-pink": "#FB9FCD",
-                    black: "#2D2727",
-                    "black-text": "#303030",
-                    "light-black-text": "#3B3939",
-                    "caption-black-text": "#585858",
-                    white: "#FFFFFF",
+                    teal: '#008080',
+                    'bright-teal': '#0CC8C8',
+                    pink: '#E4509A',
+                    'light-pink': '#FB9FCD',
+                    black: '#2D2727',
+                    'black-text': '#303030',
+                    'light-black-text': '#3B3939',
+                    'caption-black-text': '#585858',
+                    white: '#FFFFFF',
                 },
                 secondary: {
-                    green: "#54B947",
-                    "light-green": "#D0FCCB",
-                    "deep-light-green": "#A9D3A4",
-                    "aqua-blue": "#1B96DB",
-                    "light-aqua-blue": "#9BD4F4",
-                    "deep-light-aqua-blue": "#8DBBD4",
-                    blue: "#003592",
-                    "baby-blue": "#8DB4F9",
-                    "light-baby-blue": "#CEE0FF",
+                    green: '#54B947',
+                    'light-green': '#D0FCCB',
+                    'deep-light-green': '#A9D3A4',
+                    'aqua-blue': '#1B96DB',
+                    'light-aqua-blue': '#9BD4F4',
+                    'deep-light-aqua-blue': '#8DBBD4',
+                    blue: '#003592',
+                    'baby-blue': '#8DB4F9',
+                    'light-baby-blue': '#CEE0FF',
                 },
                 teal: {
-                    1: "#F0FFFF",
-                    2: "#E0F5F5",
-                    3: "#C0E6E6",
-                    4: "#A8D9D9",
-                    5: "#90CCCC",
-                    6: "#60B3B3",
-                    7: "#309999",
-                    8: "#008080",
-                    9: "#006666",
-                    10: "#004D4D",
-                    11: "#003E3E",
-                    12: "#003333",
+                    1: '#F0FFFF', 2: '#E0F5F5', 3: '#C0E6E6', 4: '#A8D9D9', 5: '#90CCCC',
+                    6: '#60B3B3', 7: '#309999', 8: '#008080', 9: '#006666', 10: '#004D4D',
+                    11: '#003E3E', 12: '#003333',
                 },
                 surfaces: {
-                    1: "#F5FAFF",
-                    2: "#D7DEE3",
-                    3: "#BBC1C7",
-                    4: "#9FA6AC",
-                    5: "#848A90",
-                    6: "#6A6F74",
-                    7: "#505558",
-                    8: "#373A3D",
-                    9: "#1E1F21",
-                    10: "#050505",
+                    1: '#F5FAFF', 2: '#D7DEE3', 3: '#BBC1C7', 4: '#9FA6AC', 5: '#848A90',
+                    6: '#6A6F74', 7: '#505558', 8: '#373A3D', 9: '#1E1F21', 10: '#050505',
                 },
                 status: {
-                    "light-red": "#FFE2E2",
-                    "highlight-red": "#FFF7F7",
-                    red: "#DD0707",
-                    salmon: "#FFAFAF",
-                    "light-yellow": "#FFF4DA",
-                    "subdued-yellow": "#FFF9EC",
-                    yellow: "#F5BC16",
-                    "mellow-yellow": "#F5D373",
-                    "light-green": "#E1F4E5",
-                    green: "#09A12A",
+                    'light-red': '#FFE2E2', 'highlight-red': '#FFF7F7', red: '#DD0707', salmon: '#FFAFAF',
+                    'light-yellow': '#FFF4DA', 'subdued-yellow': '#FFF9EC', yellow: '#F5BC16',
+                    'mellow-yellow': '#F5D373', 'light-green': '#E1F4E5', green: '#09A12A',
                 },
             },
         },

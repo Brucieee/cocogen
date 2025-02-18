@@ -8,47 +8,54 @@ use Inertia\Inertia;
 
 class HomeController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $todos = Todo::all();
 
         return Inertia::render('Home', compact('todos'));
     }
 
-    public function createTodo(){
+    public function createTodo()
+    {
         // $todos = Todo::all();
 
         return Inertia::render('Home-create');
     }
 
-    public function buttons(){
+    public function buttons()
+    {
 
 
         return Inertia::render('Buttons');
     }
 
-    public function fields(){
+    public function fields()
+    {
 
 
         return Inertia::render('Fields');
     }
 
-    public function Modals(){
+    public function Modals()
+    {
 
 
         return Inertia::render('Modals');
     }
 
-    public function ProgressBar(){
+    public function ProgressBar()
+    {
 
         return Inertia::render('ProgressBar');
     }
 
-    public function Typography(){
+    public function Typography()
+    {
 
         return Inertia::render('Typography');
-
     }
-    public function Reminder(){
+    public function Reminder()
+    {
 
 
         return Inertia::render('Reminder');
